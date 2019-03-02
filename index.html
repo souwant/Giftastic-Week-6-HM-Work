@@ -35,6 +35,7 @@
     var Gifs = ["Portland Trail Blazers", "Los Angeles Lakers", "Detriot Pistons", "Miami Heat"];
 
      function displayGifInfo(){
+       
         var Gifs = $(this).attr("data-name");
         var queryURL = "http://api.giphy.com/v1/gifs/search?q="+ Gifs +"&api_key=dc6zaTOxFJmzC&limit=5"
         
@@ -44,24 +45,59 @@
       method: "GET"
     }).then(function(response) {
       
-    for (var i = 0; i < response.data.length; i++) {
-      
-      var elem = $('<embed>').attr('src', response.detail[i].embed_url);
-      $('#images').append(elem);
+      var gifDiv = $("div class='Gifs'>");
+
+      var imgURL = response.img;
+
+      var imgae = $("<img>").attr("src",imgURL);
+
+      gifDiv.append(image);
     }
 
-   
-      
+    function renderButtons(){
+
+      $("#buttons-view").empty();
+
+      for (var i = 0; i < Gifs.length; i++){
+
+
+
+      }
+
+      var a = $("<button>");
+
+      a.addClass("img-btn");
+
+      a.attr('data-name', Gifs[i]);
+
+      a.text(Gifs[i]);
+
+      $("#buttons-view").appned(a);
+
+      }
+
+    }
+
+    $("add-Gifs").on("click", function(event) {
+      event.preventDefault();
+
+      var gif = $("#gif-input").val().trim();
+
+      Gifs.push(movie);
+
+      renderButtons();
     });
 
-    
 
+  $(documenet).on("click", ".img-btn", displayGifInfo);
+
+  renderButtons();
 
 
 
         
     </script>
-    </div>
+  </div>
    
 </body>
 </html>
