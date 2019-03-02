@@ -14,6 +14,7 @@
       margin: 10px;
     }
   </style>
+  
 <body>
     <div class="container">
         <h1>GifTastic Search</h1>
@@ -35,25 +36,29 @@
     var Gifs = ["Portland Trail Blazers", "Los Angeles Lakers", "Detriot Pistons", "Miami Heat"];
 
      function displayGifInfo(){
-       
-        var Gifs = $(this).attr("data-name");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q="+ Gifs +"&api_key=dc6zaTOxFJmzC&limit=5"
-        
+
+        var gif = $(this).attr("data-name");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q="+ gif +"&api_key=dc6zaTOxFJmzC&limit=5"
+        console.log(queryURL)
         
         $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(response) {
-      
-      var gifDiv = $("div class='Gifs'>");
+          url: queryURL,
+          method: "GET"
+          }).then(function(response) {
+            console.log(response.data);
+            Array.from(response.data).forEach(data => {
+              var gifDiv = $("<div>");
+              gifDiv.addClass('gifs');
+              var imgURL = data.images.fixed_height;
+              var img = $('<embed>');
+              img.attr('src', imgURL )
+              gifDiv.append(img);
+              $('#gif-view').append(gifDiv);
+            })
+          });
 
-      var imgURL = response.img;
-
-      var imgae = $("<img>").attr("src",imgURL);
-
-      gifDiv.append(image);
-    }
-
+     }
+     
     function renderButtons(){
 
       $("#buttons-view").empty();
@@ -62,23 +67,23 @@
 
 
 
-      }
+        var a = $("<button>");
 
-      var a = $("<button>");
+        a.addClass("img-btn");
 
-      a.addClass("img-btn");
+        a.attr('data-name', Gifs[i]);
 
-      a.attr('data-name', Gifs[i]);
+        a.text(Gifs[i]);
 
-      a.text(Gifs[i]);
-
-      $("#buttons-view").appned(a);
+        $("#buttons-view").append(a)
 
       }
 
-    }
+}
 
-    $("add-Gifs").on("click", function(event) {
+
+
+    $("#add-gif").on("click", function(event) {
       event.preventDefault();
 
       var gif = $("#gif-input").val().trim();
@@ -88,10 +93,11 @@
       renderButtons();
     });
 
+    renderButtons();
 
-  $(documenet).on("click", ".img-btn", displayGifInfo);
+  $(document).on("click", ".img-btn", displayGifInfo);
 
-  renderButtons();
+  
 
 
 
