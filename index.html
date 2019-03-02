@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+  </style>
+<body>
+    <div class="container">
+        <h1>GifTastic Search</h1>
+
+        <div id="buttons-view"></div>
+        
+        <form id="gif-form">
+            <label for="gif-input">Enter Gif Search</label>
+            <input type="text" id="gif-input">
+
+            <input id="add-gif" type="submit" value="Submit">
+        </form>
+
+        <div id="gif-view"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    var Gifs = ["Portland Trail Blazers", "Los Angeles Lakers", "Detriot Pistons", "Miami Heat"];
+
+     function displayGifInfo(){
+        var Gifs = $(this).attr("data-name");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q="+ Gifs +"&api_key=dc6zaTOxFJmzC&limit=5"
+        
+        
+        $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+      
+    for (var i = 0; i < response.data.length; i++) {
+      
+      var elem = $('<embed>').attr('src', response.detail[i].embed_url);
+      $('#images').append(elem);
+    }
+
+   
+      
+    });
+
+    
+
+
+
+
+        
+    </script>
+    </div>
+   
+</body>
+</html>
